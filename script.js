@@ -5,6 +5,7 @@ let photos;
 files.forEach(v => comp(v));
 
 function comp(fileName) {
+    let start = new Date().getTime();
     let obj = fs.readFileSync(`${fileName}.txt`, 'utf8').toString();
     photos = obj.split("\n").map(v => v.split(' '));
     photos = photos.slice(1, photos.length);
@@ -14,8 +15,8 @@ function comp(fileName) {
     });
 
     let best = getBest();
-    console.log(`${fileName}: ${eval(best)}`);
     generateFile(best, fileName);
+    console.log(`${new Date().getTime() - start}ms: ${fileName} - ${eval(best)}`);
 }
 
 function generateFile(slides, fileName) {
@@ -30,7 +31,7 @@ function generateFile(slides, fileName) {
 function getBest() {
     let slides = genSlides(),
         biggest = 0;
-    for (let i; i < Math.sqrt(slides.length); i++) {
+    for (let i = 0; i < 50; i++) {
         let temp = shuffle(slides),
             tot = eval(temp);
         if (tot > biggest) {
