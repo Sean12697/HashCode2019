@@ -1,8 +1,10 @@
 const files = ["a_example", "b_lovely_landscapes", "c_memorable_moments", "d_pet_pictures", "e_shiny_selfies"];
 let fs = require('fs');
-let photos;
+let photos, scores = [];
 
+let s = new Date().getTime();
 files.forEach(v => comp(v));
+console.log(`Score: ${scores.reduce((sum, val) => sum += val)} \t Time: ${Math.round((new Date().getTime() - s) / 10) / 100}s`);
 
 function comp(fileName) {
     let start = new Date().getTime();
@@ -14,9 +16,10 @@ function comp(fileName) {
         return v;
     });
 
-    let best = getBest();
+    let best = genSlides(), evaled = eval(best);
+    scores.push(evaled);
     generateFile(best, fileName);
-    console.log(`${new Date().getTime() - start}ms: ${fileName} - ${eval(best)}`);
+    console.log(`${new Date().getTime() - start}ms: ${fileName} - ${evaled}`);
 }
 
 function generateFile(slides, fileName) {
