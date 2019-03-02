@@ -30,7 +30,7 @@ function generateFile(slides, fileName) {
 
 function getBest() {
     let slides = genSlides(),
-        biggest = 0;
+        biggest = eval(slides);
     for (let i = 0; i < 50; i++) {
         let temp = shuffle(slides),
             tot = eval(temp);
